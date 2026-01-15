@@ -388,7 +388,7 @@
                 <div class="credits-section">
                     <strong>production:</strong>
                     Sebastian Pawlak (tr1x/Agenda)<br>
-                    Grzegorz Żyła (SiN/New Generation)
+                    Grzegorz Żyła (SuN/New Generation)
                 </div>
                 <div class="credits-section">
                     <strong>mastering:</strong>
@@ -609,10 +609,10 @@
                 player.classList.add('active');
 
                 // In production, replace with actual audio files
-                // audio.src = `audio/track${trackNum}.mp3`;
+                audio.src = `audio/track${trackNum}.mp3`;
                 
                 currentTrack = track;
-                // audio.play();
+                audio.play();
                 isPlaying = true;
                 playBtn.textContent = '⏸ Pause';
             });
