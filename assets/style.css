@@ -1,0 +1,131 @@
+/* Główne kolory z github.io */
+:root {
+    --bg-color: #ebeae6;
+    --text-main: #333333;
+    --atari-blue: #4c6c9c;
+    --dot-color: #999999;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', Arial, sans-serif;
+    color: var(--text-main);
+    margin: 0;
+    padding: 20px;
+}
+
+.page-container {
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+/* Sidebar (Lewa strona) */
+.sidebar {
+    flex: 1;
+    border-right: 1px solid #ccc;
+    padding-right: 30px;
+}
+
+.album-info h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -2px;
+}
+
+.branding-logos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.logo-box span {
+    display: block;
+    font-size: 0.7rem;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.full-width { grid-column: 1 / span 2; }
+.logo-s { height: 45px; }
+.logo-l { width: 140px; }
+
+/* Tracklista (Prawa strona) */
+.content { flex: 2; }
+
+.side-label {
+    background: var(--atari-blue);
+    color: white;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.track-item { margin-bottom: 15px; }
+
+/* KLUCZ DO KROPEK (DOT LEADERS) */
+.track-main {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+}
+
+.t-title { font-weight: 800; white-space: nowrap; }
+
+.t-dots {
+    flex-grow: 1;
+    margin: 0 8px;
+    border-bottom: 2px dotted var(--dot-color);
+    position: relative;
+    top: -4px; /* Dopasowanie do linii bazowej tekstu */
+}
+
+.t-time { font-weight: bold; min-width: 45px; }
+
+.t-tag {
+    background: var(--atari-blue);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin: 0 10px;
+}
+
+.t-event { font-size: 0.85rem; color: #666; min-width: 130px; text-align: right; }
+
+.t-author {
+    padding-left: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.t-note {
+    padding-left: 25px;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #888;
+}
+
+/* Dolne logotypy */
+.bottom-logos {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    position: relative;
+}
+
+.bottom-logos img { height: 30px; }
+.patronage { position: absolute; right: 0; bottom: -15px; font-size: 0.6rem; color: #aaa; }
