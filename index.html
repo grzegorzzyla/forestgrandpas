@@ -10,19 +10,22 @@
         
         .cover-wrapper { position: relative; max-width: 1350px; width: 100%; display: flex; align-items: center; justify-content: flex-end; }
 
-        /* WINYL WG TWOJEGO WZORCA - WIĘKSZY I MNIEJ WYSTAJĄCY */
-        .vinyl-disk {
-            position: absolute;
-            left: -10%; /* Mniej wystaje, bardziej schowany pod okładkę */
-            width: 65%; /* Duża średnica względem wrapper'a */
-            height: 95%;
-            aspect-ratio: 1;
-            background: radial-gradient(circle at center, transparent 0%, transparent 22%, #1a1a1a 22%, #1a1a1a 23%, transparent 23%, transparent 100% ), 
-                        repeating-radial-gradient(circle at center, #0a0a0a 0px, #1a1a1a 1px, #0a0a0a 2px );
-            border-radius: 50%;
-            z-index: 0;
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 10px 40px rgba(0, 0, 0, 0.6);
-        }
+        .vinyl-disk { position: absolute; left: -5%; height: 95%; aspect-ratio: 1 / 1; background: radial-gradient(circle at center, transparent 0%, transparent 22%, #1a1a1a 22%, #1a1a1a 23%, transparent 23%, transparent 100% ), repeating-radial-gradient(circle at center, #0a0a0a 0px, #1a1a1a 1px, #0a0a0a 2px ); border-radius: 50%; z-index: 0; box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 10px 40px rgba(0, 0, 0, 0.6); transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; justify-content: center; }
+        .vinyl-disk::after { content: "Best of ATARI"; color: #2e4a7d; font-family: 'Arial Black', sans-serif; font-size: 1.2vw; display: flex; align-items: center; justify-content: center; width: 22%; height: 22%; background: #e0e0e0; border-radius: 50%; border: 4px solid #5a7eb5; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); }
+        .vinyl-disk.is-playing { left: -35%; }
+        .vinyl-disk.is-spinning { animation: spin 4s linear infinite; }
+        /* Odblask na płycie */
+        .vinyl-disk::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.15) 50%, transparent 55%); z-index: 1; pointer-events: none; }
+
+        /* Ramię przesunięte na lewy dół, startuje pionowo w górę */
+/*
+        .tonearm { position: absolute; left: 1%; bottom: 10px; width: 320px; height: 12px; background: linear-gradient(to bottom, #888, #555); transform-origin: left center; transform: rotate(-90deg); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; border-radius: 6px; box-shadow: -2px -5px 10px rgba(0,0,0,0.3); } 
+*/
+        .tonearm { position: absolute; left: 1%; bottom: 10px; width: 320px; height: 12px; background: linear-gradient(to bottom, #aaa 0%, #777 50%, #444 100%); transform-origin: left center; transform: rotate(-90deg); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; border-radius: 6px; box-shadow: 0 15px 25px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.5); border-bottom: 2px solid #333; }        .tonearm::before { content: ""; position: absolute; right: 0; top: -5px; width: 25px; height: 22px; background: #333; border-radius: 2px; box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+        /* Ruch ramienia z -90 stopni (pion w górę) na ok. -155 stopni (wychylenie w lewo na płytę) */
+        .tonearm.on-vinyl { transform: rotate(-155deg); }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* OKŁADKA Z GĘSTYMI PASKAMI */
         .vinyl-cover { 
@@ -42,11 +45,14 @@
         .info-text { font-size: 0.82em; line-height: 1.5; color: #222; font-weight: 600; text-align: justify; }
         .credits-section { font-size: 0.78em; color: #333; margin-bottom: 3px; display: flex; }
         .credits-section strong { width: 100px; flex-shrink: 0; }
-        .branding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; }
-        .brand-item span { display: block; font-size: 0.65em; color: #666; margin-bottom: 5px; }
-        .brand-item img { height: 124px; object-fit: contain; }
-        .brand-item.full { grid-column: 1 / span 2; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px; }
-        .brand-item.full img { width: 200px; }
+        /* Branding Grid */
+        .branding-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; align-items: end; }
+        .brand-item { text-decoration: none; display: block; transition: transform 0.3s ease; }
+        .brand-item:hover { transform: translateY(-8px); }
+        .brand-item span { display: block; font-size: 0.65em; color: #666; margin-bottom: 10px; text-transform: uppercase; }
+        .brand-item img { height: 124px; max-width: 100%; object-fit: contain; }
+        .brand-item.full { grid-column: 1 / span 2; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px; margin-top: 10px; }
+        .brand-item.full img { width: 250px; height: auto; }
         .side-label { background: #5a7eb5; color: white; width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; font-weight: bold; margin-bottom: 15px; }
         .track { padding: 6px 10px; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
         .track:hover { background: rgba(255, 255, 255, 0.5); }
@@ -60,9 +66,13 @@
         .track-year { font-size: 0.8em; color: #666; min-width: 120px; text-align: right; }
         .track-artist { padding-left: 22px; font-size: 0.85em; font-weight: 600; color: #444; }
         .track-subtext { padding-left: 22px; font-size: 0.75em; font-style: italic; color: #666; line-height: 1.2; }
-        .patronage-footer { margin-top: auto; display: flex; align-items: center; gap: 15px; padding: 10px; background: rgba(255,255,255,0.2); }
-        .patronage-footer img { height: 32px; }
-        .patronage-label { margin-left: auto; font-size: 0.55em; color: #777; align-self: flex-end; }
+        /* Patronage Footer */
+        .patronage-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .patronage-logos { display: flex; justify-content: center; align-items: center; gap: 25px; width: 100%; }
+        .patronage-logos a { display: flex; transition: transform 0.3s ease; }
+        .patronage-logos a:hover { transform: translateY(-5px); }
+        .patronage-logos img { height: 35px; }
+        .patronage-label { align-self: flex-end; font-size: 0.6em; color: #555; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; opacity: 0.7; margin-right: 10px; }        
         .player-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #333; color: white; padding: 15px 30px; display: none; align-items: center; gap: 20px; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.3); }
         .player-bar.active { display: flex; }
         .play-btn { background: #5a7eb5; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
@@ -74,6 +84,7 @@
 <body>
 
 <div class="cover-wrapper">
+    <div class="tonearm" id="tonearm"></div>
     <div class="vinyl-disk"></div>
     <div class="vinyl-cover">
         <div class="left-side">
@@ -91,9 +102,20 @@
                 <div class="credits-section"><strong>tech support:</strong> Łukasz Maśko (Peri Noid), Wojciech Pawlak</div>
             </div>
             <div class="content-box branding-grid">
-                <div class="brand-item"><span>production</span><img src="assets/forest-grandpas.png"></div>
-                <div class="brand-item"><span>mastering</span><img src="assets/eprom-sounds.png"></div>
-                <div class="brand-item full"><span>pressing plant</span><img src="assets/xdisc.png"></div>
+                <a href="https://facebook.com/ForestGrandpas" target="_blank" class="brand-item">
+                    <span>production</span>
+                    <img src="assets/forest-grandpas.png" alt="Forest Grandpas">
+                </a>
+
+                <a href="http://www.epromsounds.com" target="_blank" class="brand-item">
+                    <span>mastering</span>
+                    <img src="assets/eprom-sounds.png" alt="Eprom Sounds">
+                </a>
+
+                <a href="https://x-disc.pl" target="_blank" class="brand-item full">
+                    <span>pressing plant</span>
+                    <img src="assets/xdisc.png" alt="X-Disc">
+                </a>
             </div>
         </div>
 
@@ -120,10 +142,25 @@
                     <div class="track" data-file="track12.mp3"><div class="track-header"><span class="track-num">5.</span><span class="track-title">Jack Dance</span><span class="dots"></span><span class="track-duration">3:22</span><span class="track-format">MONO</span><span class="track-year">1994</span></div><div class="track-artist">Adam Bienias (SoTe/Slight)</div><div class="track-subtext">this is a cover of the Amiga track "Jack Dance" by Karsten Obarski</div></div>
                 </div>
             </div>
+
             <div class="patronage-footer">
-                <img src="assets/atariarea.png"><img src="assets/atari-online.png"><img src="assets/grel.png"><img src="assets/atari-fan.png">
+                <div class="patronage-logos">
+                    <a href="http://atariarea.krap.pl" target="_blank">
+                        <img src="assets/atariarea.png" alt="AtariArea">
+                    </a>
+                    <a href="https://atari.online" target="_blank">
+                        <img src="assets/atari-online.png" alt="Atari Online">
+                    </a>
+                    <a href="http://grel.atari.pl" target="_blank">
+                        <img src="assets/grel.png" alt="GREL">
+                    </a>
+                    <a href="http://atarifan.pl" target="_blank">
+                        <img src="assets/atari-fan.png" alt="Atari Fan">
+                    </a>
+                </div>
                 <span class="patronage-label">patronage</span>
             </div>
+
         </div>
     </div>
 </div>
@@ -144,31 +181,70 @@
     const playingTitle = document.getElementById('playingTitle');
     const playingArtist = document.getElementById('playingArtist');
     const progressFill = document.getElementById('progressFill');
+    const vinyl = document.querySelector('.vinyl-disk');
+    const tonearm = document.getElementById('tonearm');
+    const crackle = new Audio('audio/crackle.mp3');
+    crackle.volume = 0.5; // Ustaw głośność szumu (0.0 do 1.0)
 
     let currentAudio = new Audio();
     let isPlaying = false;
 
+    
     tracks.forEach(track => {
         track.addEventListener('click', () => {
             const fileName = track.getAttribute('data-file');
+            
+            // 1. Natychmiastowa reakcja wizualna
             tracks.forEach(t => t.classList.remove('playing'));
             track.classList.add('playing');
+            
+            // Płyta wyjeżdża i zaczyna się kręcić
+            vinyl.classList.add('is-playing', 'is-spinning');
+            
+            // Ramię gramofonu opada na płytę
+            tonearm.classList.add('on-vinyl');
+
+            // Aktualizacja interfejsu
             playingTitle.innerText = track.querySelector('.track-title').innerText;
             playingArtist.innerText = track.querySelector('.track-artist').innerText;
             playerBar.classList.add('active');
-            currentAudio.src = "audio/" + fileName; 
-            currentAudio.play();
-            isPlaying = true;
-            masterPlayBtn.innerText = "⏸ Pause";
+
+            // 2. Logika audio: Najpierw trzask igły
+            currentAudio.pause(); 
+            currentAudio.src = ""; // Czyścimy poprzedni utwór
+            
+            crackle.currentTime = 0;
+            crackle.play();
+
+            // 3. Gdy trzask (crackle.mp3) dobiegnie końca, startuje muzyka
+            crackle.onended = () => {
+                currentAudio.src = "audio/" + fileName;
+                currentAudio.play();
+                isPlaying = true;
+                masterPlayBtn.innerText = "⏸ Pause";
+            };
         });
     });
-
     masterPlayBtn.addEventListener('click', () => {
-        if (isPlaying) { currentAudio.pause(); masterPlayBtn.innerText = "▶ Play"; }
-        else { currentAudio.play(); masterPlayBtn.innerText = "⏸ Pause"; }
+        if (isPlaying) { 
+            currentAudio.pause(); 
+            masterPlayBtn.innerText = "▶ Play";
+            vinyl.classList.remove('is-spinning'); // Zatrzymuje obracanie na pauzie
+        } else { 
+            currentAudio.play(); 
+            masterPlayBtn.innerText = "⏸ Pause";
+            vinyl.classList.add('is-spinning'); // Wznawia obracanie
+        }
+        
+        if (isPlaying) {
+                tonearm.classList.remove('on-vinyl'); // Igła wraca na miejsce przy pauzie
+            } else {
+                tonearm.classList.add('on-vinyl'); // Igła opada przy wznowieniu
+            }        
+        
         isPlaying = !isPlaying;
     });
-
+    
     currentAudio.addEventListener('timeupdate', () => {
         progressFill.style.width = (currentAudio.currentTime / currentAudio.duration) * 100 + "%";
     });
